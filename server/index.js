@@ -1,18 +1,20 @@
 const getIPAddress = require("./getIpAddress");
+const populateEnv = require('./populateEnv');
 const http = require("http");
 const path = require("path");
 const fs = require("fs");
 const formidable = require("formidable");
 
+populateEnv();
+
 const server = http.createServer(async (req, res) => {
     const form = formidable();
     if (req.method === "POST") {
         form.parse(req, (err, fields, files) => {
-            const ws = fs.createWriteStream("./test");
             if (err) {
                 console.log(err);
             } else {
-                console.log(files.file.filepath);
+                console.log(files.file);
                 fs.writeFileSync("./test.png", fs.readFileSync(files.file.filepath, 'binary'), 'binary');
                 res.writeHead(200, {
                     'Content-Type': 'application/json'
@@ -34,7 +36,6 @@ const server = http.createServer(async (req, res) => {
             });
         } else {
             res.writeHead(200, {
-                'Content-Length': size,
                 'Content-Type': 'text/html; charset=UTF-8'
             });
         }
