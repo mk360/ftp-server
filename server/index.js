@@ -18,6 +18,7 @@ const server = http.createServer(async (req, res) => {
                 res.writeHead(200, {
                     'Content-Type': 'text/html; charset=UTF-8'
                 });
+
                 res.write(fs.readFileSync('../client/done.html'));
                 res.end();
             }
@@ -25,11 +26,12 @@ const server = http.createServer(async (req, res) => {
     } else {
         try {
             if (req.url.includes(".ico")) return;
-            const filePath = path.join(__dirname, '../client' + (req.url === "/" || req.url.includes("fileupload") ? "/index.html" : req.url));
 
-            if (req.url.endsWith('.js')) {
+            const filePath = path.join(__dirname, '../client' + (req.url === "/" ? "/index.html" : req.url));
+
+            if (req.url.endsWith('.css')) {
                 res.writeHead(200, {
-                    'Content-Type': 'application/javascript;'
+                    'Content-Type': 'text/css;'
                 });
             } else {
                 res.writeHead(200, {
