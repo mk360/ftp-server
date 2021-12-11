@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@700&display=swap" rel="stylesheet" /> 
         <link rel="stylesheet" href="./index.css" />
     </head>
     <body>
         <form action="fileupload" method="post" enctype="multipart/form-data">
-            <input name="file" type="file" id="file" />
-            <input type="submit" id="submit" />
+            <div id="send-container">
+                <input name="file" type="file" id="file" />
+                <label id="file-upload-label" for="file">Click to select a file to send</label>
+            </div>
+            <div>
+                <input type="submit" id="submit" name="submit" />
+                <label for="submit" id="file-submit-label">Send file</label>
+            </div>
         </form>
     </body>
 </html>

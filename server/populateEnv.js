@@ -16,7 +16,7 @@ try {
             if (!process.env[entryName]) {
                 process.env[entryName] = entryValue;
 
-                console.log("Loaded environment entry: " + entryName + " = " + entryValue);
+                console.log("Loaded environment file entry: " + entryName + " = " + entryValue);
             }
         }
     }

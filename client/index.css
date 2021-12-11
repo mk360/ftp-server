@@ -1,0 +1,60 @@
+body {
+    background-color: #94DAC9;
+    font-family: Fira Sans;
+}
+
+input {
+    display: none;
+}
+
+label {
+    display: inline-block;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+}
+
+#file-upload-label:hover {
+    background-color: black;
+    color: #94DAC9;
+}
+
+#file-submit-label {
+    background-color: black;
+    color: #94DAC9;
+}
+
+#send-container {
+    margin: 0 0 8px 0;
+}
+
+#file-submit-label:hover {
+    background-color: #94DAC9;
+    color: black;
+}
+
+@media (min-width: 576px) {
+    body {
+        font-size: 16vw;
+        padding: 40px;
+    }
+
+    label {
+        font-size: 40px;
+        padding: 20px;
+        border: 5px solid black;
+    }
+}
+
+@media (min-width: 768px) {
+    body {
+        font-size: 16px;
+        padding: 16px;
+    }
+
+    label {
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 10px;
+        font-size: 16px;
+    }
+}
