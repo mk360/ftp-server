@@ -4,6 +4,7 @@ const os = require("os");
 
 try {
     const env = fs.readFileSync('../.env', 'utf-8');
+
     const entries = env.split(os.EOL).filter(e => e).map(i => i.trim());
     const entriesRegex = /^(?<entryName>[A-z-_]+)\s*=\s*(?<entryValue>.+)/;
 
