@@ -28,3 +28,5 @@ You should create an `.env` file at the root of the project. That `.env` file sh
 ## How can I configure it?
 
 - Choose a download location with the key `DOWNLOAD_LOCATION`. Insanely enough, relative paths work just as well as absolute paths. If the path contains subfolders, make sure they exist beforehand. Make sure you omit the last slash (ex. type "folder/subfolder" not "folder/subfolder/").
+
+For now that's all that's needed.
