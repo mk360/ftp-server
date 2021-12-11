@@ -10,9 +10,12 @@ try {
     for (let entry of entries) {
         const entriesRegexResult = entriesRegex.exec(entry);
         if (entriesRegexResult) {
-            const { entryName, entryValue } = entriesRegexResult.groups;    
+            const { entryName, entryValue } = entriesRegexResult.groups;
+
             if (!process.env[entryName]) {
                 process.env[entryName] = entryValue;
+
+                console.log("Loaded environment entry: " + entryName + " = " + entryValue);
             }
         }
     }
