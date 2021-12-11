@@ -1,49 +1,47 @@
+require('./populateEnv');
 const getIPAddress = require("./getIpAddress");
-const populateEnv = require('./populateEnv');
 const http = require("http");
 const path = require("path");
 const fs = require("fs");
 const formidable = require("formidable");
-
-populateEnv();
+const form = formidable();
 
 const server = http.createServer(async (req, res) => {
-    const form = formidable();
     if (req.method === "POST") {
         form.parse(req, (err, fields, files) => {
             if (err) {
                 console.log(err);
             } else {
-                console.log(files.file);
-                fs.writeFileSync("./test.png", fs.readFileSync(files.file.filepath, 'binary'), 'binary');
+                const finalFilePath = process.env.DOWNLOAD_PATH ? `${process.env.DOWNLOAD_PATH}/${files.file.originalFilename}` : files.file.filepath;
+                fs.writeFileSync(finalFilePath, fs.readFileSync(files.file.filepath, 'binary'), 'binary');
+
                 res.writeHead(200, {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'text/html; charset=UTF-8'
                 });
-                res.end(JSON.stringify({ "bruh":  false }));
+                res.write(fs.readFileSync('../client/done.html'));
+                res.end();
             }
         });
-        return;
-    }
+    } else {
+        try {
+            if (req.url.includes(".ico")) return;
+            const filePath = path.join(__dirname, '../client' + (req.url === "/" || req.url.includes("fileupload") ? "/index.html" : req.url));
 
-    try {
-        if (req.url.includes(".ico")) return;
-        const filePath = path.join(__dirname, '../client' + (req.url === "/" || req.url.includes("fileupload") ? "/index.html" : req.url));
-        const { size } = fs.statSync(filePath);
+            if (req.url.endsWith('.js')) {
+                res.writeHead(200, {
+                    'Content-Type': 'application/javascript;'
+                });
+            } else {
+                res.writeHead(200, {
+                    'Content-Type': 'text/html; charset=UTF-8'
+                });
+            }
 
-        if (req.url.endsWith('.js')) {
-            res.writeHead(200, {
-                'Content-Type': 'application/javascript;'
-            });
-        } else {
-            res.writeHead(200, {
-                'Content-Type': 'text/html; charset=UTF-8'
-            });
+            res.write(fs.readFileSync(filePath));
+            res.end();
+        } catch (e) {
+
         }
-
-        res.write(fs.readFileSync(filePath));
-        res.end();
-    } catch (e) {
-
     }
 });
 
