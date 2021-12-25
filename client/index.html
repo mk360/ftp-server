@@ -9,11 +9,40 @@
             <div id="send-container">
                 <input name="file" type="file" id="file" />
                 <label id="file-upload-label" for="file">Click to select a file to send</label>
+                <div id="selected-file-name">
+                </div>
             </div>
             <div>
                 <input type="submit" id="submit" name="submit" />
                 <label for="submit" id="file-submit-label">Send file</label>
             </div>
         </form>
+        <script>
+            const fileInput = document.getElementById('file');
+
+            fileInput.onchange = function (e) {
+                const { files } = fileInput;
+                const filesArray = Array.from(files);
+
+                document.getElementById('selected-file-name').innerHTML = 'Selected files: ' + filesArray.map((file) => {
+                    const displayedSize = displayFileSize(file.size);
+
+                    return `${file.name} (${displayedSize})`;
+                }).join(', ');
+            };
+
+            function displayFileSize(size) {
+                const units = ["B", "KB", "MB", "GB"];
+                let tempSize = size;
+
+                for (let unit of units) {
+                    if (tempSize < 1024) {
+                        return `${tempSize.toFixed(2)} ${unit}`;
+                    }
+
+                    tempSize /= 1024;
+                }
+            };
+        </script>
     </body>
 </html>

@@ -29,14 +29,20 @@ const server = http.createServer(async (req, res) => {
 
             const filePath = path.join(__dirname, '../client' + (req.url === "/" ? "/index.html" : req.url));
 
-            if (req.url.endsWith('.css')) {
-                res.writeHead(200, {
-                    'Content-Type': 'text/css;'
-                });
-            } else {
-                res.writeHead(200, {
-                    'Content-Type': 'text/html; charset=UTF-8'
-                });
+            switch (true) {
+                case req.url.endsWith('.css'):
+                    res.writeHead(200, {
+                        'Content-Type': 'text/css'
+                    });
+                break;
+                case req.url.endsWith('.js'):
+                    res.writeHead(200, {
+                        'Content-Type': 'text/javascript'
+                    });
+                default:
+                    res.writeHead(200, {
+                        'Content-Type': 'text/html; charset=UTF-8'
+                    });
             }
 
             res.write(fs.readFileSync(filePath));
