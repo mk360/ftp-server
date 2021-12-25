@@ -1,9 +1,11 @@
 // basically reproducing what the dot-env package did
 const fs = require("fs");
 const os = require("os");
+const path = require("path");
 
 try {
-    const env = fs.readFileSync('../.env', 'utf-8');
+    const envFilePath = path.join(__dirname, '..', './.env');
+    const env = fs.readFileSync(envFilePath, 'utf-8');
 
     const entries = env.split(os.EOL).filter(e => e).map(i => i.trim());
     const entriesRegex = /^(?<entryName>[A-z-_]+)\s*=\s*(?<entryValue>.+)/;
